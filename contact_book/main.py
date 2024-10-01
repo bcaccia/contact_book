@@ -9,12 +9,26 @@ contacts_database_location = 'contacts.csv'
 separator = '\n--------------------------------\n'
 
 def load_contacts_db() -> pd.DataFrame:
+        """Load the csv into a DataFrame
+
+        Returns:
+            pd.DataFrame: _description_
+        """
         return pd.read_csv(contacts_database_location)
         
 def write_contacts_db(df: pd.DataFrame, mode_flag: str, header_flag: str):
+        """Write the DataFrame to a csv
+
+        Args:
+            df (pd.DataFrame): _description_
+            mode_flag (str): _description_
+            header_flag (str): _description_
+        """
         df.to_csv(contacts_database_location, mode=mode_flag, header=header_flag, index=False)
         
 def check_db_exists() -> None:
+        """Validate the existence of the csv db
+        """
         # Does the db file exist? Carry on
         if os.path.exists(contacts_database_location):
                 pass
@@ -25,6 +39,8 @@ def check_db_exists() -> None:
                 df.to_csv(contacts_database_location, header=True, index=False)
 
 def display_menu() -> None:
+        """Print the main program menu
+        """
         menu = '''
         1. Add a contact
         2. Search for a contacts
@@ -36,6 +52,8 @@ def display_menu() -> None:
         print(menu)
         
 def add_contact() -> None:
+        """Add a brand new contact and save to the db
+        """
         name: str = input('Enter contact name: ')
         email: str = input('Enter contact email: ')
         phone: str = input('Enter contact phone number: ')
@@ -45,6 +63,15 @@ def add_contact() -> None:
         print('Contact added!')
         
 def search_contacts(df: pd.DataFrame, search_string: str) -> List:
+        """Search the DataFrame and return results
+
+        Args:
+            df (pd.DataFrame): _description_
+            search_string (str): _description_
+
+        Returns:
+            List: _description_
+        """
         filtered_rows: List = []
         # Search every column in the dataframe for the string and return all rows that contain it
         for column in df:
@@ -54,6 +81,8 @@ def search_contacts(df: pd.DataFrame, search_string: str) -> List:
         return list(set(filtered_rows))
 
 def update_contact() -> None:
+        """Update an existing contacts fields
+        """
         df: pd.DataFrame = pd.read_csv(contacts_database_location)
         entry: int = int(input('Contact to update: '))
         fields: pd.DataFrame = df.iloc[entry].to_list()
@@ -66,6 +95,8 @@ def update_contact() -> None:
         print('Contact updated!')
 
 def delete_contact() -> None:
+        """Delete a contact from the DataFrame
+        """
         df: pd.DataFrame = pd.read_csv(contacts_database_location)
         entry: str = int(input('Contact index # to delete: '))
         df.drop(index=entry, inplace=True)
@@ -73,6 +104,8 @@ def delete_contact() -> None:
         print('Contact deleted!')
 
 def display_all_contacts() -> None:
+        """Display all contacts
+        """
         df: pd.DataFrame = pd.read_csv(contacts_database_location)
         print(df)
         

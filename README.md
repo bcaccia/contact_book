@@ -1,0 +1,1 @@
+A simple cli contact manager. 
